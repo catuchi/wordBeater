@@ -4,7 +4,7 @@
 
 ## Demo
 
-This app is deployed on netlify. Try it [WordBeater Game](https://whimsical-cobbler-7797c5.netlify.app/)
+This app is deployed on netlify. Try it [WordBeater Game](https://delicate-sherbet-5b2601.netlify.app/)
 
 ## Tech Stack
 
