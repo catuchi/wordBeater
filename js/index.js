@@ -1,6 +1,20 @@
+import { words } from "./helpers";
+
 window.addEventListener("load", init);
 
-let time = 5;
+// Globals
+
+// Available levels
+const levels = {
+  easy: 5,
+  medium: 3,
+  hard: 2,
+};
+
+// To change level
+const currentLevel = levels.easy;
+
+let time = currentLevel;
 let score = 0;
 let isPlaying;
 
@@ -11,59 +25,51 @@ const scoreDisplay = document.getElementById("score");
 const timeDisplay = document.getElementById("time");
 const message = document.getElementById("message");
 const seconds = document.getElementById("seconds");
-const difficulty = document.getElementById("difficulty").value;
-
-// generate random word from API
-async function fetchWord() {
-  try {
-    const response = await fetch(`https://random-words-api.vercel.app/word`);
-    const data = await response.json();
-    const word = await data[0].word;
-
-    console.log(word);
-    currentWord.innerHTML = word;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-const words = [
-  "hat",
-  "river",
-  "lucky",
-  "statue",
-  "generate",
-  "stubborn",
-  "cocktail",
-  "runaway",
-  "joke",
-  "developer",
-  "establishment",
-  "hero",
-  "javascript",
-  "nutrition",
-  "revolver",
-  "echo",
-  "siblings",
-  "investigate",
-  "horrendous",
-  "symptom",
-  "laughter",
-  "magic",
-  "master",
-  "space",
-  "definition",
-];
-
-// fetchWord();
+// const difficulty = document.getElementById("difficulty").value;
 
 // Initialize game
 function init() {
   // Load word from array
   showWordArray(words);
 
+  // start matching on word input
+  wordInput.addEventListener("input", startMatch);
+
   // Call countdown every second
   setInterval(countdown, 1000);
+
+  // check game status
+  setInterval(checkStatus, 50);
+}
+
+// start match
+function startMatch() {
+  seconds.innerHTML = currentLevel;
+  if (matchWords()) {
+    isPlaying = true;
+    time = currentLevel + 1;
+    showWordArray(words);
+    wordInput.value = "";
+    score++;
+  }
+
+  // if score is -1 display 0
+  if (score === -1) {
+    scoreDisplay.innerHTML = 0;
+  } else {
+    scoreDisplay.innerHTML = score;
+  }
+}
+
+// match current word to wordInput
+function matchWords() {
+  if (wordInput.value === currentWord.innerHTML) {
+    message.innerHTML = "Correct!!!";
+    return true;
+  } else {
+    message.innerHTML = "";
+    return false;
+  }
 }
 
 // Pick & show random word
@@ -87,4 +93,12 @@ function countdown() {
   }
   // show time
   timeDisplay.innerHTML = time;
+}
+
+// check game status
+function checkStatus() {
+  if (!isPlaying && time === 0) {
+    message.innerHTML = "Game Over!!!";
+    score = -1;
+  }
 }

@@ -23,7 +23,6 @@
       <h1>WordBeater</h1>
     </header>
     <div class="container text-center">
-      <!-- Difficulty -->
       <!-- Word & Input -->
       <div class="row">
         <div class="col-md-6 mx-auto">
@@ -31,15 +30,17 @@
             Type The Given Word Within
             <span class="text-success" id="seconds">5</span> Seconds:
           </p>
-          <select
+
+          <!-- Difficulty -->
+          <!-- <select
             id="difficulty"
             class="form-select form-select-sm"
             aria-label=".form-select-sm example"
           >
-            <!-- <option selected>Select difficulty</option> -->
             <option value="regular">Regular</option>
             <option value="legend">Legend</option>
-          </select>
+          </select> -->
+
           <h2 class="display-2 mb-5" id="current-word">hello</h2>
           <input
             type="text"
@@ -76,6 +77,6 @@
       </div>
     </div>
 
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
   </body>
 </html>
